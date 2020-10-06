@@ -39,6 +39,9 @@ class LoggedController extends Controller
   $data = $request -> all();
   $card = Card::findOrFail($id);
   $card -> update($data);
+  $user = Auth::user();
+  $action = "EDIT";
+  Mail::to('admin@admin.com')->send(new UserAction($user,$card,$action));
   return redirect() -> route('index');
 }
 }
